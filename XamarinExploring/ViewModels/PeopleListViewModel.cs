@@ -1,3 +1,4 @@
+using System;
 using XamarinExploring.Views;
 
 using System.Collections.ObjectModel;
@@ -7,16 +8,15 @@ using Xamarin.Forms;
 
 
 namespace XamarinExploring.ViewModels {
+  
   public class PeopleListViewModel : INotifyPropertyChanged {
     
     public ObservableCollection<PersonViewModel> People { get; set; }
     
     public event PropertyChangedEventHandler PropertyChanged;
     
-    public ICommand AddPersonCommand { protected set; get; }
-    public ICommand DeletePersonCommand { protected set; get; }
-    public ICommand SavePersonCommand { protected set; get; }
-    public ICommand BackToPeopleListCommand { protected set; get; }
+    public ICommand DeletePersonCommand { protected set; get; }     // TODO
+    public ICommand BackToPeopleListCommand { protected set; get; } // TODO
     
     PersonViewModel selectedPerson;
     
@@ -24,11 +24,17 @@ namespace XamarinExploring.ViewModels {
     
     
     public PeopleListViewModel() {
-      People = new ObservableCollection<PersonViewModel>();
-      AddPersonCommand = new Command(AddPerson);
-      DeletePersonCommand = new Command(DeletePerson);
-      SavePersonCommand = new Command(SavePerson);
-      BackToPeopleListCommand = new Command(BackToPeopleListPage);
+      
+      People = new ObservableCollection<PersonViewModel> {
+        new PersonViewModel() { Name = "John Davis", Email = "john.davis@fmail.com", Phone = "55555555" },
+        new PersonViewModel() { Name = "Cris Jonson", Email = "cris.jonson@fmail.com", Phone = "666666666" }
+      };
+      
+      BeginToInputNewPersonDataCommand = new Command(BeginToInputNewPersonData);
+      SaveNewPersonCommand = new Command(SaveNewPerson);
+      
+      DeletePersonCommand = new Command(DeletePerson);              // TODO
+      BackToPeopleListCommand = new Command(BackToPeopleListPage);  // TODO
     }
     
     
@@ -43,32 +49,38 @@ namespace XamarinExploring.ViewModels {
 
         selectedPerson = null;
         OnPropertyChanged("SelectedPerson");
-        NavigationService.PushAsync(new PersonDetailsPage(value));
+        NavigationService.PushAsync(new PersonDetailsPage(this));
       }
     }
 
 
-    private void OnPropertyChanged(string propName) {
-      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+    /* === Person adding ============================================================================================ */
+    public PersonViewModel NewPerson { get; set; }
+    
+    public ICommand BeginToInputNewPersonDataCommand { protected set; get; }
+    public ICommand SaveNewPersonCommand { protected set; get; }
+    
+    private void BeginToInputNewPersonData() {
+      NewPerson = new PersonViewModel();
+      NavigationService.PushAsync(new PersonAddingPage(this));
     }
     
-    private void AddPerson() {
-      NavigationService.PushAsync(new PersonDetailsPage(new PersonViewModel() { ListViewModel = this }));
-    }
-    
-    private void BackToPeopleListPage() {
-      NavigationService.PopAsync();
-    }
-    
-    private void SavePerson(object personObject) {
+    private void SaveNewPerson(object personObject) {
       
-      if (personObject is PersonViewModel person && person.IsValid && !People.Contains(person)) {
+      if (personObject is PersonViewModel person && person.IsValid) {
         People.Add(person);
       }
       
+      NewPerson = null;
       BackToPeopleListPage();
     }
+
     
+    // === < TODO > ====================================================================================================
+    private void BackToPeopleListPage() {
+      NavigationService.PopAsync();
+    }
+
     private void DeletePerson(object personObject) {
       
       if (personObject is PersonViewModel person) {
@@ -76,6 +88,13 @@ namespace XamarinExploring.ViewModels {
       }
       
       BackToPeopleListPage();
+    }
+    // === TODO > ======================================================================================================
+    
+    
+    /* === Routines ================================================================================================= */
+    private void OnPropertyChanged(string propName) {
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
   }
 }

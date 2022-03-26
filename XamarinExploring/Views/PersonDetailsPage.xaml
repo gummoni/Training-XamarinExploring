@@ -9,11 +9,11 @@
     
     <StackLayout x:Name="PersonStack">
       <Label Text="Name" />
-      <Entry Text="{Binding Name}" FontSize="Medium" />
+      <Entry Text="{Binding NewPerson.Name}" FontSize="Medium" />
       <Label Text="Email" />
-      <Entry Text="{Binding Email}" FontSize="Medium" />
+      <Entry Text="{Binding NewPerson.Email}" FontSize="Medium" />
       <Label Text="Phone" />
-      <Entry Text="{Binding Phone}" FontSize="Medium" />
+      <Entry Text="{Binding NewPerson.Phone}" FontSize="Medium" />
     </StackLayout>
     
     <StackLayout 
@@ -22,17 +22,17 @@
     >
       <Button 
         Text="Add"
-        Command="{Binding ListViewModel.SavePersonCommand}" 
-        CommandParameter="{Binding}" 
+        Command="{Binding SaveNewPersonCommand}" 
+        CommandParameter="{Binding NewPerson}" 
       />
       <Button 
         Text="Delete"
-        Command="{Binding ListViewModel.DeletePersonCommand}" 
+        Command="{Binding DeletePersonCommand}" 
         CommandParameter="{Binding}" 
       />
       <Button
         Text="Back" 
-        Command="{Binding Path=ListViewModel.BackToPeopleListCommand}"
+        Command="{Binding Path=BackToPeopleListCommand}"
       />
     </StackLayout>
   </StackLayout>

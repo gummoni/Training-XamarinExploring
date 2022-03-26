@@ -6,7 +6,7 @@ namespace XamarinExploring.Views {
   public partial class PeopleListPage : ContentPage {
     public PeopleListPage() {
       InitializeComponent();
-      BindingContext = new PeopleListViewModel() { NavigationService = this.Navigation };
+      BindingContext = new PeopleListViewModel { NavigationService = this.Navigation };
     }
   }
 }

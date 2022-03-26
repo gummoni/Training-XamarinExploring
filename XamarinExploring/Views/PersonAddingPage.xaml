@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage 
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  x:Class="XamarinExploring.Views.PersonAddingPage"
+>
+  <StackLayout x:Name="PersonStack">
+    
+    <Label Text="Name" />
+    <Entry Text="{Binding NewPerson.Name}" FontSize="Medium" />
+    
+    <Label Text="Email" />
+    <Entry Text="{Binding NewPerson.Email}" FontSize="Medium" />
+    
+    <Label Text="Phone" />
+    <Entry Text="{Binding NewPerson.Phone}" FontSize="Medium" />
+    
+    <Button 
+      Text="Add"
+      Command="{Binding SaveNewPersonCommand}" 
+      CommandParameter="{Binding NewPerson}" 
+    />
+    <Button
+      Text="Back" 
+      Command="{Binding Path=BackToPeopleListCommand}"
+    />
+  </StackLayout>
+</ContentPage>

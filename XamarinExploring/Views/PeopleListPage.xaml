@@ -6,7 +6,6 @@
   Title="People list"
 >
   <StackLayout>
-    <Button Text="Add" Command="{Binding AddPersonCommand}" />
     <ListView 
       x:Name="PeopleList" 
       ItemsSource="{Binding People}"
@@ -27,5 +26,6 @@
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
+    <Button Text="Add" Command="{Binding BeginToInputNewPersonDataCommand}" />
   </StackLayout>
 </ContentPage>

@@ -9,25 +9,9 @@ namespace XamarinExploring.ViewModels {
     public event PropertyChangedEventHandler PropertyChanged;
     public Person Person { get; private set; }
     
-    private PeopleListViewModel _peopleListViewModel;
-
 
     public PersonViewModel() {
       Person = new Person();
-    }
-    
-    
-    public PeopleListViewModel ListViewModel {
-      
-      get => _peopleListViewModel;
-
-      set　{
-        
-        if (_peopleListViewModel == value) return;
-        
-        _peopleListViewModel = value;
-        OnPropertyChanged("ListViewModel");
-      }
     }
     
     
@@ -39,9 +23,8 @@ namespace XamarinExploring.ViewModels {
         
         if (Person.Name == value) return;
         
-        
         Person.Name = value;
-        OnPropertyChanged("Name");
+        OnPropertyChanged(nameof(Person.Name));
       }
     }
     
@@ -55,7 +38,7 @@ namespace XamarinExploring.ViewModels {
         
         
         Person.Email = value;
-        OnPropertyChanged("Email");
+        OnPropertyChanged(nameof(Person.Email));
       }
     }
     
@@ -69,7 +52,7 @@ namespace XamarinExploring.ViewModels {
         
         
         Person.Phone = value;
-        OnPropertyChanged("Phone");
+        OnPropertyChanged(nameof(Person.Phone));
       }
     }
     
@@ -78,7 +61,6 @@ namespace XamarinExploring.ViewModels {
         ((!string.IsNullOrEmpty(Name.Trim())) ||
         (!string.IsNullOrEmpty(Phone.Trim())) ||
         (!string.IsNullOrEmpty(Email.Trim())));
-
 
     private void OnPropertyChanged(string propName) {
       PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
