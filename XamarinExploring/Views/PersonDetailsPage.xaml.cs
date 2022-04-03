@@ -1,3 +1,4 @@
+using System;
 using Xamarin.Forms;
 using XamarinExploring.ViewModels;
 
@@ -8,10 +9,14 @@ namespace XamarinExploring.Views {
     
     public PeopleListViewModel PeopleListViewModel { get; private set; }
     
-    public PersonDetailsPage(PeopleListViewModel personViewModel) {
+    public PersonDetailsPage(PeopleListViewModel peopleListViewModel) {
       InitializeComponent();
-      PeopleListViewModel = personViewModel;
+      PeopleListViewModel = peopleListViewModel;
       BindingContext = PeopleListViewModel;
+      Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData);
+      Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData.Name);
+      Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData.Email);
+      Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData.Phone);
     }
   }
 }
