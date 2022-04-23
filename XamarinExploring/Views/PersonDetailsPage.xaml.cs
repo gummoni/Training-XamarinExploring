@@ -12,7 +12,7 @@ namespace XamarinExploring.Views {
     public PersonDetailsPage(PeopleListViewModel peopleListViewModel) {
       InitializeComponent();
       PeopleListViewModel = peopleListViewModel;
-      BindingContext = PeopleListViewModel;
+      BindingContext = PeopleListViewModel.currentlyBeingEditedExistingPersonData;
       Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData);
       Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData.Name);
       Console.WriteLine(PeopleListViewModel.currentlyBeingEditedExistingPersonData.Email);

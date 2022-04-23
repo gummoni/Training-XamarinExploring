@@ -11,11 +11,11 @@
       x:Name="PersonStack"
     >
       <Label Text="Name" />
-      <Entry Text="{Binding currentlyBeingEditedExistingPersonData.Name}" FontSize="Medium" />
+      <Entry Text="{Binding Name}" FontSize="Medium" />
       <Label Text="Email" />
-      <Entry Text="{Binding currentlyBeingEditedExistingPersonData.Email}" FontSize="Medium" />
+      <Entry Text="{Binding Email}" FontSize="Medium" />
       <Label Text="Phone" />
-      <Entry Text="{Binding currentlyBeingEditedExistingPersonData.Phone}" FontSize="Medium" />
+      <Entry Text="{Binding Phone}" FontSize="Medium" />
     </StackLayout>
     
     <StackLayout 
