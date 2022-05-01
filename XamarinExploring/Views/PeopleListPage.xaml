@@ -2,6 +2,7 @@
 <ContentPage
   xmlns="http://xamarin.com/schemas/2014/forms"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
   x:Class="XamarinExploring.Views.PeopleListPage" 
   Title="People list"
 >
@@ -9,9 +10,12 @@
     <ListView 
       x:Name="PeopleList" 
       ItemsSource="{Binding People}"
-      SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
       HasUnevenRows="True"
     >
+      <ListView.Behaviors>
+        <xct:EventToCommandBehavior EventName="ItemSelected" Command="{Binding BeginToEditPersonDataCommand}" />
+      </ListView.Behaviors>
+      
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>

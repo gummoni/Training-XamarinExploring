@@ -23,6 +23,11 @@
       HorizontalOptions="CenterAndExpand"
     >
       <Button 
+        Text="Update"
+        Command="{Binding UpdatePersonCommand}" 
+        CommandParameter="{Binding}" 
+      />
+      <Button 
         Text="Delete"
         Command="{Binding DeletePersonCommand}" 
         CommandParameter="{Binding}" 

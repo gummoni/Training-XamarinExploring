@@ -31,6 +31,19 @@ namespace XamarinExploring.ViewModels {
     /* === Person adding ============================================================================================ */
     public PersonViewModel NewPerson { get; set; }
     
+    public ICommand BeginToEditPersonDataCommand { protected set; get; }
+    private void BeginToEditPersonData(object eventArgs)
+    {
+      if (eventArgs is SelectedItemChangedEventArgs selectedItemChangedEventArgs)
+      {
+        if (selectedItemChangedEventArgs.SelectedItem is PersonViewModel selectedPerson)
+        {
+          var viewModel = new PersonDetailViewModel(this, selectedPerson);
+          NavigationService.PushAsync(new PersonDetailsPage(viewModel));
+        }
+      }
+    }
+
     public ICommand BeginToInputNewPersonDataCommand { protected set; get; }
     private void BeginToInputNewPersonData() {
       NewPerson = new PersonViewModel();
@@ -50,39 +63,42 @@ namespace XamarinExploring.ViewModels {
     
     
     /* === Person viewing and editing =============================================================================== */
-    private PersonViewModel _selectedPerson;
+    //private PersonViewModel _selectedPerson;
     
     /* [ Methodology ] Currently it is even with 'PersonViewModel' but in the future it will change. */
-    public CurrentlyBeingEditedExistingPersonData currentlyBeingEditedExistingPersonData;
-    public class CurrentlyBeingEditedExistingPersonData : PersonViewModel {}
+    //public CurrentlyBeingEditedExistingPersonData currentlyBeingEditedExistingPersonData;
+    //public class CurrentlyBeingEditedExistingPersonData : PersonViewModel {}
     
-    public PersonViewModel SelectedPerson {
+    //public PersonViewModel SelectedPerson {
       
-      get => _selectedPerson;
+    //  get => _selectedPerson;
       
-      set　{
+    //  set　{
         
-        if (_selectedPerson == value) return;
+    //    if (_selectedPerson == value) return;
 
-        _selectedPerson = value;
-        OnPropertyChanged(nameof(SelectedPerson));
+    //    _selectedPerson = value;
+    //    OnPropertyChanged(nameof(SelectedPerson));
 
-        currentlyBeingEditedExistingPersonData = new CurrentlyBeingEditedExistingPersonData {
-          Name = _selectedPerson.Name,
-          Email = _selectedPerson.Email,
-          Phone = _selectedPerson.Phone
-        };
+    //    currentlyBeingEditedExistingPersonData = new CurrentlyBeingEditedExistingPersonData {
+    //      Name = _selectedPerson.Name,
+    //      Email = _selectedPerson.Email,
+    //      Phone = _selectedPerson.Phone
+    //    };
         
-        NavigationService.PushAsync(new PersonDetailsPage(this));
+    //    NavigationService.PushAsync(new PersonDetailsPage(this));
         
-        _selectedPerson = null;
-      }
-    }
+    //    _selectedPerson = null;
+    //  }
+    //}
     
     // === < TODO > ====================================================================================================
     public ICommand UpdatePersonCommand { protected set; get; }
 
-    private void UpdatePerson(object personObject) {
+    private void UpdatePerson(object args) {
+      if (args is PersonDetailViewModel viewModel) {
+        viewModel.Update();
+      }
       BackToPeopleListPage();
     }
     
@@ -91,13 +107,12 @@ namespace XamarinExploring.ViewModels {
     
     private void BackToPeopleListPage() {
       NavigationService.PopAsync();
-      SelectedPerson = null;
     }
 
-    private void DeletePerson(object personObject) {
+    private void DeletePerson(object args) {
       
-      if (personObject is PersonViewModel person) {
-        People.Remove(person);
+      if (args is PersonDetailViewModel viewModel) {
+        People.Remove(viewModel.Original);
       }
       
       BackToPeopleListPage();
@@ -108,11 +123,11 @@ namespace XamarinExploring.ViewModels {
     /* === Routines ================================================================================================= */
     private void InitializeCommands() {
       
+      BeginToEditPersonDataCommand = new Command(BeginToEditPersonData);
       BeginToInputNewPersonDataCommand = new Command(BeginToInputNewPersonData);
       SaveNewPersonCommand = new Command(SaveNewPerson);
-
+      UpdatePersonCommand = new Command(UpdatePerson);
       DeletePersonCommand = new Command(DeletePerson);
-      
       BackToPeopleListCommand = new Command(BackToPeopleListPage);
     }
     
